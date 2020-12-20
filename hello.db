@@ -29,13 +29,13 @@
                     }
                 },
                 "country": {
-                    "41d5d50ed06a4b52813b0754d2d57b85": {
+                    "04a25cb3fc654b698ddc0e1514571a6b": {
                         "_id": "",
                         "name": "",
+                        "created_at": "",
+                        "updated_at": "",
                         "continent": "",
-                        "population": "",
-                        "create_at": "",
-                        "updated_at": ""
+                        "population": ""
                     }
                 }
             },
@@ -43,7 +43,15 @@
                 "users": {},
                 "contact": {},
                 "food": {},
-                "country": {}
+                "country": {
+                    "_id": "",
+                    "name": "",
+                    "created_at": "",
+                    "updated_at": "",
+                    "total_cols": 7,
+                    "continent": "",
+                    "population": ""
+                }
             }
         }
     ]

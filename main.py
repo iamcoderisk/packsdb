@@ -6,8 +6,6 @@ import packsdb as db
 # # hel.addTable("['foo', {"bar":["baz", null, 1.0, 2]}]")
 
 # # print(hel.getName())
-# mymodule.greeting("ekemini")
-
 k =  db.PacksDB()
 
 k.create("hello")
@@ -15,9 +13,7 @@ k.create("hello")
 # k.add('{"name":"sarafina", "cols":["ddd","email","phone"]}')
 # k.remove("sooo")
 # k.get("users")
-tables =  k.selectKey("country")
-# # print(tables)
-# k.addValue('{"name":"ecuador","continent":"europe","population":"20m"}')
+tables =  k.selectKey("country").addValue('{"name":"ecuador","continent":"europe","population":"20m"}')
 # contacts =  k.selectKey("contact").getAll()
 # print(contacts["email"])
 

@@ -57,14 +57,20 @@ class PacksDB(object):
                                 table_cols = {}
                                 table_cols[self.colId] = {}
                                 table_cols[self.colId]['_id'] = ""
+                                ##table columns data with no random ID 
+                                table_cols_no_id  = {}
+                                table_cols_no_id['_id'] = ""
                                 for col in info['cols']:
+                                    table_cols_no_id[col] = ""
+                                    table_cols_no_id["created_at"] = ""
+                                    table_cols_no_id["updated_at"] = ""
+                                    table_cols_no_id["total_cols"] =  len(table_cols_no_id)
                                     table_cols[self.colId][col] = ""
-                                table_cols[self.colId]["create_at"] = ""
-                                table_cols[self.colId]["updated_at"] = ""
-                                t['tables'][info['name']] =  table_cols
-                                t['data'][info['name']] = {}
-                                # print(self.db)
-                                # newDb = open(self.db, "r")
+                                    table_cols[self.colId]["created_at"] = ""
+                                    table_cols[self.colId]["updated_at"] = ""
+                                    t['tables'][info['name']] =  table_cols
+                                    t['data'][info['name']] = table_cols_no_id
+                           
                                 with open(self.name, 'w', encoding='utf-8') as f:
 
                                     # f.write(json.dumps([database]).encode())
@@ -93,39 +99,60 @@ class PacksDB(object):
                 for t in database:
                    for table in t:
                     if str(tableName) in table['tables']:
-                        print(tableName)
-                    # return self
-                    # else:
-                    #     print ("Invalid key selection")
+                        self.table = tableName
+                        return self
+                    else:
+                        print ("Invalid key selection")
+    def getTableData(self,tableName):
+        if self.db != '':
+            if tableName == self.table:
+                with open(self.name,"r") as db_table:
+                    database = json.load(db_table)
+                    for db_value in database:
+                        for db_data in db_value:
+                             return db_data['data'][self.table]
+            else:
+                print("No availble table")
+        else:
+            print("No available database")
     def addValue(self,data=''):
         if self.db  !='':
             with open(self.name,"r") as db:
                 database =  json.load(db)
                 data = json.loads(data)
                 if self.table  != '':
-                        for key in data:
-                            mq = 0
-                            for db_value in database['tables'][self.table]:
-                                if db_value == key:
-                                    mq = 1
-                            if mq == 0:
-                                print("column or key doesn't not exist ")
-                        if len(data) == int(len(database['tables'][self.table]))-3:
+                        # print(len(data))
+                        # for key in data:
+                            
+                        #     mq = 0
+                        #     for db_value in database:
+                        #         for table in db_value:
+                        #            for x in table['tables'][self.table]:
+                        #                 ##get table data
+                        #                         # table_data = self.getTableData("country")
+                        #                 #    print(next(iter(table['data'][self.table])))
+                        #                         if x == key:
+                        #                             mq = 1
+                        #     if mq == 0:
+                        #          print("column or key doesn't not exist ")
+                        if len(data) >= 1:
                             newData = {}
                             newData['_id'] =  uuid.uuid4().hex
                             for key,value in data.items():
                                 newData[key] =  value
-                                # print(data.values())
+                                                    # print(data.values())
                                 newData['created_at'] =  datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
                                 newData['updated_at'] = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
-                                database['tables'][self.table]  =  newData
-                                with open(self.name, 'ab+', encoding='utf-8') as f:
-                                    f.seek(0,2)
-                                    json.dump(database, f, ensure_ascii=False, indent=4)
-                                    self.db =  f
-                            return True
-                                # else:
-                                #     print ("All column or key must not be null")
+                                for db_value in database:
+                                     for table in db_value:
+                                            table['tables'][self.table]  =  newData
+                                            with open(self.name, 'ab+', encoding='utf-8') as f:
+                                                f.seek(0,2)
+                                                json.dump(database, f, ensure_ascii=False, indent=4)
+                                                self.db =  f
+                                                return True
+                        else:
+                            print ("All column or key must not be null")
                 else:
                     print ("kindly set a table")
 
